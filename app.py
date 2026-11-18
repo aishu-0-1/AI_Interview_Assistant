@@ -6,7 +6,7 @@ st.title('AI_Interview_Assistant')
 st.caption('practice and perpare for your palcement here')
 
 try:
-  client = Groq(api_key = ("GROQ_API_KEY"))
+  client = Groq(api_key = ["GROQ_API_KEY"])
 
 except(KeyError, FileNotFound):
   st.error("API Key is missing.Add it in Advanced Setting")
