@@ -16,3 +16,5 @@ if role == "other":
    st.text_input("Enter you Job Title", "XXXXXXXX")
 # cretar the dropdown list: two option :openai/gpt-oss-20b: openai/gpt-oss-120b
 model = st.selectbox("modle", ["openai/gpt-oss-20b" ,"openai/gpt-oss-120b"])
+model = st.selectbox("diffeclty", ["Beginner" ,"Intermediate","Adavance"])
+
