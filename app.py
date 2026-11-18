@@ -3,6 +3,7 @@ from groq import Groq
 st.set_page_config(page_title='AI_Interview_Assistant', page_icon='🎃', layout='centered')
 st.title('🎯AI_Interview_Assistant')
 st.caption('practice and perpare for your palcement here')
+st.caption('Launched By Aishwarya S M')
 
 try:
   client = Groq(api_key = ["GROQ_API_KEY"])
