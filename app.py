@@ -54,7 +54,7 @@ with st.spinner ("Genrating your answer ...."):
     st.markdown(output)
     st.download_button("Download Response", output , file_name ="Interview_Response.txt", mime = "text/plain")
   
-  except Exception as e:
+  except Exception as {e}:
     st.error ("API connection was unsuccessful")
     st.info("Please check your API key and rate limits")
 st.caption("Powered by Streamlit.io and Github. Using LLM API")
