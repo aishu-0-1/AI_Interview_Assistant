@@ -8,7 +8,7 @@ st.caption('Launched By Aishwarya S M')
 try:
   client = Groq(api_key = ["GROQ_API_KEY"])
 
-except(KeyError, FileNotFound):
+except(KeyError, FileNotFound): 
   st.error("API Key is missing.Add it in Advanced Setting")
   st.stop()
 
