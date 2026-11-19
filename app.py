@@ -6,7 +6,7 @@ st.caption('practice and perpare for your palcement here')
 st.caption('Launched By Aishwarya S M')
 
 try:
-  client = Groq(api_key = ["GROQ_API_KEY"])
+ client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 except(KeyError, FileNotFound): 
   st.error("API Key is missing.Add it in Advanced Setting")
