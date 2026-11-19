@@ -1,62 +1,60 @@
 import streamlit as st
-from groq import Groq                                          
-st.set_page_config(page_title='AI_Interview_Assistant', page_icon='🎃', layout='centered')
-st.title('🎯AI_Interview_Assistant')
-st.caption('practice and perpare for your palcement here')
-st.caption('Launched By Aishwarya S M')
-
+from groq import Groq
+st.set_page_config(page_title = "AI_Assistant", page_icon ="🤩", layout = "centered")
+st.title("AI_Interview_Assitant")
+st.caption("Practice and prepare your placements here")
+st.caption("Launched by LOHITA R PATIL")
 try:
-  client = Groq(api_key = ["GROQ_API_KEY"])
-
-except(KeyError, FileNotFound): 
-  st.error("API Key is missing.Add it in Advanced Setting")
+  client = Groq(api_key = st.secrets["GROQ_API_KEY"])
+except (KeyError, FileNotFoundError):
+  st.error("API key is missing Add it in advance setting")
   st.stop()
-role = st.selectbox('Job Title', ['Machine Learning Engineer','Senior Software engineer','Devops Engineer','Data Analyst','Prompt Engineer','other'])
-if role == "other":
-   st.text_input("Enter you Job Title", "XXXXXXXX")
-# cretar the dropdown list: two option :openai/gpt-oss-20b: openai/gpt-oss-120b
-gen_model = st.selectbox("modle", ["openai/gpt-oss-20b" ,"openai/gpt-oss-120b"])
-level = st.selectbox("diffeclty", ["Beginner" ,"Intermediate","Adavance"])
-mode =st.radio("Activity",["Generate Questions","Generate code Questions","Evaluate Answers","Improve Answers"])
-if mode == "Generate  Questions":
+role = st.selectbox("Job Title", ["ML engineer", "DevOps engineer", "Software developer", "Software Engineer", "Prompt engineer", "Data analyst", "Other"])
+if role == "Other":
+  st.text_input("Enter the job title","XXXXXXXX")
+gen_model = st.selectbox("Model",["openai/gpt-oss-20b", "openai/gpt-oss-120b"])
+level = st.selectbox("Difficulty",["Beginner", "Intermediate", "Adavance"])
+mode = st.radio("Activity", ["Generate questions", "Generate coding question", "Evaluate answers", "Improve answer"])
+if mode == "Generate questions":
   count = st.slider("Number of Question",1,10,5)
-elif mode == "Generate Code Questions":
-  topics = st.selectbox("Topics",["SQL","DBMS","C++/C","AIML","Java","CSS","Python"])
-  count = st.slider("Number of Questions",1,10,5)
+elif mode == "Generate coding question":
+  topic = st.selectbox("Topics", ["SQL", "Python", "Java", "Html", "cyber Security", "C++/C", "DSA"])
+  count = st.slider("Number of Question",1,10,5)
 else:
-  Question = st.text_area("Enter Interview Question here")
-  answer = st.text_area("Enter your answers",height =160)
-if st.button("Generate AI Response", type = "primary"): 
- if mode in ["Evaluate Answers", "Improve Answers"] and ( not question.strip() or not answers.strip()):
-  st.warning ("Please enter a valid Question and Answer")
-  st.stop()
-   
-if mode == "Generate  Questions":
-  task = "Generate" + str(count) + "Frequently asked Interview Questions, 3 theory and 2 scenario questions.Do not give answers. Give the hint"
-elif mode == "Generate Code Questions":
-  task = "Generate" + str(count) + "Frequently asked coding questions on topic" + topic +"and give hints to solve them. Be accurate."
-elif mode == "Evaluate Answers":
-   task = "Question :" + question +"My answer : " + answer + " Evaluate this answers based on concept, relevance, communication, length of answer .G ive each rating out of  5 in the list."
-elif mode == "Improve Answers":
-   task = "Question :" + question +"My answer : " + answer + " Improve my answer and give the correct answer in simple English." 
-background = "Job role :" + role + " Difficulti level " + level 
-with st.spinner ("Genrating your answer ...."):
-  try:
-    response = client .chat.completions.create(
-      model = gen_model,
-      messages = [{"role":"system",
-                   "content":"Act as a Senior Interviwer, both HR and Technical expert"},
-                  {"role":"user",
-                   "content":background + task}
-                 ],
-      temperature = 0.7,
-      max_tokens = 1800 )
-    output =  response.choices[0].message.content
-    st.subheader("AI Response")
-    st.markdown(output)
-    st.download_button("Download Response", output , file_name ="Interview_Response.txt", mime = "text/plain")
+  question = st.text_area("Enter Interview Question here")
+  answer = st.text_area("Enter your answer", height =160)
+if st.button("Generate AI response", type = "primary"):
+  if mode in ["Evaluate answers", "Improve answer"] and (not question.strip() or not answer.strip()):
+    st.warning("Please enter valid question and answer")
+    st.stop()
   
-  except Exception as e:
-    st.error ("API connection was unsuccessful:" ,e)
-    st.info("Please check your API key and rate limits")
-st.caption("Powered by Streamlit.io and Github. Using LLM API")
+  if mode == "Generate questions":
+    task = "Generate" + str(count) + "Generate Frequently asked intrview question not the answer only the hint"
+  elif mode == "Generate coding question":
+    task = "Generate" + str(count) + " Generate Frequrently asked  coding questions on topic" + topic + " and give hints to solve them. Be accurate."
+  elif mode == "Evaluate answers":
+    task = "Question: " + question + "My answer" + answer + " Evaluate this answer based on concept, relevance, communication, length of answer. Give each rating out of 5 in a list."
+  elif mode == "Improve answer":
+    task = "Question: " + question + "My answer" + answer + " Improve my answer for a better way in consice way and dont invent new thing give in a understandable way."
+  background = "Job role: " + role+ "Difficulty level"+ level
+  with st.spinner("Generating you answer..."):
+    try:
+      response = client.chat.completions.create(
+        model = gen_model,
+        messages = [{"role":"system",
+                     "content":"Act as a Senior Interviewer,both HR and technical expert"},
+                    {"role":"user",
+                     "content":background + task}
+                     ],
+        temperature = 0.7,
+        max_tokens = 1800
+      )
+      output = response.choices[0].message.content
+      st.subheader("AI Response")
+      st.markdown(output)
+      st.download_button("Download Response", output , file_name = "Interview_Response.txt", mime = "text/plain")
+  
+    except Exception as e:
+      st.error("API connection was unsucessful : ",e)
+      st.info("Please check your API key and rate limits")
+st.caption("Powered by streamlit.io and github using LLM API")
