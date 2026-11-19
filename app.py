@@ -47,7 +47,7 @@ with st.spinner ("Genrating your answer ...."):
       messages = [{"role":"system",
                    "content":"Act as a Senior Interviwer, both HR and Technical expert"},
                   {"role":"user",
-                   "content":background + task }
+                   "content":background + task}
                  ],
       temperature = 0.7,
       max_tokens = 1800 )
